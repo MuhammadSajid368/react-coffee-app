@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
-import sampleItems from '../data/data';  // Ensure the path is correct
+import sampleItems from '../data/data'; 
 
 interface Product {
   id: string;
@@ -14,7 +14,7 @@ interface Product {
 
 const Hero = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
-  const [searchData, setSearchData] = useState<Product[]>([]); // Change to empty array for consistent type
+  const [searchData, setSearchData] = useState<Product[]>([]);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const term = e.target.value;
@@ -27,7 +27,7 @@ const Hero = () => {
         product.name.toLowerCase().includes(term.toLowerCase()) ||
         product.description.toLowerCase().includes(term.toLowerCase())
       );
-      console.log(filteredProducts);  // For debugging
+      console.log(filteredProducts);  
       setSearchData(filteredProducts);
     }
   };

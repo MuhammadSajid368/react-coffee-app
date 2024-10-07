@@ -44,7 +44,7 @@ const reducer = (state = initialState, action: any) => {
               ...cartItem,
               items: cartItem.items.map((item) =>
                 item.id === action.payload.items[0].id
-                  ? { ...item, quantity: (item.quantity || 1) + 1 }  // Increment the quantity
+                  ? { ...item, quantity: (item.quantity || 1) + 1 }
                   : item
               ),
             };
@@ -59,7 +59,6 @@ const reducer = (state = initialState, action: any) => {
     }
 
     case REMOVE_FROM_CART: {
-      // Find the cart item to update and remove the specific item
       const updatedCart = state.cart.map((cartItem) => {
         if (cartItem.id === action.payload.cartId) {
           return {
@@ -68,7 +67,7 @@ const reducer = (state = initialState, action: any) => {
           };
         }
         return cartItem;
-      }).filter(cartItem => cartItem.items.length > 0); // Remove the cart if it's empty
+      }).filter(cartItem => cartItem.items.length > 0); 
 
       return { ...state, cart: updatedCart };
     }

@@ -2,7 +2,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { addNotification, AddtoCart, createOrder } from "../redux/actions";
+import {  AddtoCart, createOrder } from "../redux/actions";
 import { Cart, Item } from "../types";
 
 const ItemList: React.FC = () => {
@@ -29,15 +29,13 @@ const ItemList: React.FC = () => {
   const handleaddtocart = (item: Item) => {
     console.log("Adding to cart:", item.name);
 
-    // Check if the item is already in the cart
     const existingCartItem = cart.find(
       (cartItem: Cart) => cartItem.items.some(cartItem => cartItem.id === item.id)
     );
 
-    // If item is already in the cart, show a message and return early
     if (existingCartItem) {
       toast.error(`${item.name} is already in your cart!`);
-      return; // Exit the function without adding the item again
+      return;
     }
 
     let discountApplied = false;
@@ -51,20 +49,20 @@ const ItemList: React.FC = () => {
 
       if (matchingItem) {
         discountApplied = true;
-        discountedPrice = item.price * 0.9 * (1 + item.taxRate); // Apply discount
+        discountedPrice = item.price * 0.9 * (1 + item.taxRate); 
       }
     }
 
     // Create the new cart item with the updated price
     const newCartItem = {
-      id: Date.now().toString(), // Ensure unique ID for each cart item
+      id: Date.now().toString(), 
       productName: item.name,
       items: [item],
       productPrice: discountedPrice,
-      quantity: 1, // Add quantity to keep track of how many of this item are in the cart
+      quantity: 1,
     };
 
-    dispatch(AddtoCart(newCartItem)); // Dispatch action to add the item to the cart
+    dispatch(AddtoCart(newCartItem));
     toast.success(
       `${item.name} is added to cart${discountApplied ? " with a discount!" : "!"
       }`

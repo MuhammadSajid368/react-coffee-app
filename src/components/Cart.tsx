@@ -11,7 +11,7 @@ import { FaShoppingCart } from 'react-icons/fa';
 const CartComponent: React.FC = () => {
   const cart = useSelector((state: any) => state.cart);
   const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(false); // Loading state
+  const [isLoading, setIsLoading] = useState(false);
 
   if (cart.length === 0) {
     return <p>Your cart is empty!</p>;
@@ -35,29 +35,27 @@ const CartComponent: React.FC = () => {
           );
 
           if (pairedItem) {
-            // Apply discount: Check if discountPrice exists, otherwise apply 10% discount
             const discount = item.discountPrice
               ? item.discountPrice * item.quantity
               : item.price * 0.1 * item.quantity;
 
-            // Ensure the discount isn't applied more than once if needed
             if (!discountApplied || item.quantity > 1) {
               totalPrice -= discount;
-              discountApplied = true; // Apply only once
+              discountApplied = true;
             }
           }
         }
       });
     });
 
-    return totalPrice.toFixed(2); // Return the total price with two decimal places
+    return totalPrice.toFixed(2);
   };
 
 
 
   // Handle ordering of cart items
   const handleOrder = async (cartItem: Cart) => {
-    setIsLoading(true); // Set loading state to true
+    setIsLoading(true); 
 
     const order = {
       id: Date.now().toString(),
@@ -67,19 +65,19 @@ const CartComponent: React.FC = () => {
     };
 
     // Simulating order creation
-    await dispatch(createOrder(order)); // Assuming createOrder is asynchronous
+    await dispatch(createOrder(order));
     toast.success(`Your order for ${cartItem.productName} has been placed!`);
 
     setTimeout(() => {
       toast.info(`Your order for ${cartItem.productName} is ready!`);
-      setIsLoading(false); // Reset loading state after showing the second toast
+      setIsLoading(false);
     }, 9000);
   };
 
   // Handle product removal
   const handleRemoveFromCart = (itemId: string, cartId: string) => {
     dispatch(removeFromCart(itemId, cartId));
-    toast.success('Product removed successfully'); // Show success message
+    toast.success('Product removed successfully'); 
   };
 
   return (
@@ -120,7 +118,7 @@ const CartComponent: React.FC = () => {
                 {/* Remove and Order Buttons with Icons */}
                 <div className="flex items-center space-x-4 mt-3">
                   <button
-                    onClick={() => handleRemoveFromCart(item.id, cartItem.id)} // Call handleRemoveFromCart
+                    onClick={() => handleRemoveFromCart(item.id, cartItem.id)}
                     className="px-4 py-2 bg-red-400 text-white rounded hover:bg-red-500 flex items-center"
                   >
                     <AiFillDelete className="mr-2" size={20} /> Remove
@@ -129,7 +127,7 @@ const CartComponent: React.FC = () => {
                   <button
                     onClick={() => handleOrder(cartItem)}
                     className="px-4 py-2 bg-blue-400 text-white rounded hover:bg-blue-500 flex items-center"
-                    disabled={isLoading} // Disable button if loading
+                    disabled={isLoading}
                   >
                     <FaShoppingCart className="mr-2" size={18} />
                     {isLoading ? 'Ordering...' : 'Order Now'}

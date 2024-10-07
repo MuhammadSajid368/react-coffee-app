@@ -1,4 +1,3 @@
-// src/components/Orders.tsx
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addNotification, createOrder } from '../redux/actions';
